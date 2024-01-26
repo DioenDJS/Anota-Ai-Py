@@ -1,0 +1,25 @@
+name: Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Build and Push Docker Image
+      run: |
+        echo ${{ secrets.AWS_ACCESS_KEY_ID }} | docker login -u AWS --password-stdin public.ecr.aws
+        docker build -t public.ecr.aws/sam/build-python3.9:latest .
+        docker push public.ecr.aws/sam/build-python3.9:latest
+
+    - name: Deploy via Pipeline
+      run: |
+        # Adicione aqui os comandos específicos para implantar via pipeline
+        # Por exemplo, pode ser usado AWS CodePipeline, AWS CodeBuild, etc.

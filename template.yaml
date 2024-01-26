@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Stack com recursos para iserir um json no S3
+
+Parameters:
+  Environment:
+    Type: "String"
+    Default: "development"
+    AllowedValues: ["development"]
+
+Mappings:
+  Environments:
+    development:
+      ResouceSufix: development
+      QueueSufix: Development
+
+Globals:
+  Function:
+    Runtime: python3.9
+    MemorySize: 256
+    Timeout: 600
+    Layers:
+      - Ref: DepLayer
+    Tags:
+      env: !FindInMap [ Environments, !Ref Environment, EnvTag ]
+      project: "anota-ai"
+    Environment:
+      Variables:
+        ENVIRONMENT: !Ref Environment
+
+  CatalogUpdateV2DLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !join [ "", [ "CatalogUpdateV2DLQ", !FindInMap [ Environments, !Ref Environment, QueueSufix ], ".fifo"] ]
+      FifoQueue: true
+
+  CatalogUpdateV2Queue:
+    type: AWS::SQS::Queue
+    Properties:
+      QueueName: !join [ "", ["CatalogUpdateV2Queue", !FindInMap [ Environment, !Ref Enviroment, QueueSufix ], ".fifo"] ]
+      FifoQueue: true
+      ContentBasedDeduplication: true
+      visibilityTimeout: 120
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt CatalogUpdateV2DLQ.Arn
+        maxReceiveCount: 3
