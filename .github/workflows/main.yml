@@ -50,7 +50,9 @@ jobs:
           aws cloudformation deploy --template-file /packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
           echo "SAM deployment completed successfully"
 
-
+      - name: Print contents of packaged.yaml
+        run: |
+          cat packaged.yaml
 
 
 
