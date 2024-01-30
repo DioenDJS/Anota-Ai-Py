@@ -1,19 +1,19 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  Stack com recursos para iserir um json no S3
-
+Description: "Stack com recursos para iserir um json no S3"
 Parameters:
   Environment:
-    Type: "String"
-    Default: "development"
-    AllowedValues: ["development"]
-
+    Type: String
+    Default: development
+    AllowedValues: [development]
 Mappings:
   Environments:
     development:
       ResouceSufix: development
       QueueSufix: Development
+      SecurityGroupId: sg-0b8f9e8784efe46d5
+      AnotaAiDesafioPrivateAppKey: secrets://anotaaidesafio/development?private_app_key
+      AnotaAiDesafioPrivateAppSecret: parameters://anotaaidesafio/development?private-app/secret
 
 Globals:
   Function:
