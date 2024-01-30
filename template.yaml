@@ -28,7 +28,7 @@ Globals:
     Environment:
       Variables:
         ENVIRONMENT: !Ref Environment
-
+Resources:
   CatalogUpdateV2DLQ:
     Type: AWS::SQS::Queue
     Properties:
