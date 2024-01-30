@@ -30,9 +30,21 @@ jobs:
 
       - name: Install SAM CLI
         run: |
-          pip install aws-sam-cli==1.35.0
+          pip install aws-sam-cli
+
+      - name: Package SAM application
+        run: |
+          sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket anotai-test
+          echo "SAM Package completed successfully"
+
+      - name: Cleanup
+        run: |
+          rm -f packaged.yaml
 
       - name: Deploy SAM application
         run: |
+          echo "Deploying SAM application..."
           aws cloudformation deploy --template-file packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
+          echo "SAM deployment completed successfully"
+
       
