@@ -30,7 +30,7 @@ jobs:
 
       - name: Install SAM CLI
         run: |
-          pip install aws-sam-cli==<desired_version>
+          pip install aws-sam-cli==1.35.0
 
       - name: Deploy SAM application
         run: |
