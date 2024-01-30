@@ -36,7 +36,7 @@ Resources:
       FifoQueue: true
 
   CatalogUpdateV2Queue:
-    type: AWS::SQS::Queue
+    Type: AWS::SQS::Queue
     Properties:
       QueueName: !join [ "", ["CatalogUpdateV2Queue", !FindInMap [ Environment, !Ref Enviroment, QueueSufix ], ".fifo"] ]
       FifoQueue: true
