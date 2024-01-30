@@ -27,3 +27,12 @@ jobs:
         run: |
           pip install -r dep.txt -t dependencies/python
           sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket annotai-test-sam
+
+      - name: Install SAM CLI
+        run: |
+          pip install aws-sam-cli==<desired_version>
+
+      - name: Deploy SAM application
+        run: |
+          sam deploy --template-file packaged.yaml --stack-name <stack-name> --capabilities CAPABILITY_IAM
+      
