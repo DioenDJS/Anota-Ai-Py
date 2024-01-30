@@ -1,5 +1,3 @@
-image: 715749665003.dkr.ecr.us-east-2.amazonaws.com/anota-ai-desafio
-
 name: Deploy Application Anota-ai-desafio
 
 on:
