@@ -7,6 +7,7 @@ client.serd()
 
 def lambda_handler(event, context):
     records = event.get('Records')
+
     # import
     #
     # {S3Client, GetObjectCommand, PutObjectCommand}
