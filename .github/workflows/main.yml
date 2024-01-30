@@ -16,7 +16,7 @@ jobs:
         with:
           aws_access_key_id: AKIA2NJQBFDVU32ZKFPM
           aws_secret_access_key: 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
-          aws_region: us-east-2
+          aws_region: "us-east-2"
 
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
