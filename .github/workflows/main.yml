@@ -47,7 +47,7 @@ jobs:
       - name: Deploy SAM application
         run: |
           echo "Deploying SAM application..."
-          aws cloudformation deploy --template-file /packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
+          aws cloudformation deploy --template-file /packaged.yaml --parameter-overrides Environment=development --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
           echo "SAM deployment completed successfully"
 
       - name: Print contents of packaged.yaml
