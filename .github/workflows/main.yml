@@ -36,6 +36,8 @@ jobs:
         run: |
           sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket anotai-test
           echo "SAM Package completed successfully"
+        artifacts:
+          - packaged.yaml
 
       - name: Cleanup
         run: |
@@ -48,7 +50,8 @@ jobs:
       - name: Deploy SAM application
         run: |
           echo "Deploying SAM application..."
-          aws cloudformation deploy --template-file packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
+          aws cloudformation deploy --template-file ./packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
           echo "SAM deployment completed successfully"
+
 
       
