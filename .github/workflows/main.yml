@@ -41,15 +41,16 @@ jobs:
         run: |
           rm -f packaged.yaml
 
-      - name: List files in current directory
+      - name: List files in temporary directory
         run: |
-          ls -l
+          ls -l ${{ github.workspace }}/packaged.yaml
 
       - name: Deploy SAM application
         run: |
           echo "Deploying SAM application..."
-          aws cloudformation deploy --template-file ./packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
+          aws cloudformation deploy --template-file ${{ github.workspace }}/packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
           echo "SAM deployment completed successfully"
+
 
 
 
