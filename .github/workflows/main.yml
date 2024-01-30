@@ -26,7 +26,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r dep.txt -t dependencies/python
-          sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket anotai-test
 
       - name: Install SAM CLI
         run: |
@@ -43,12 +42,12 @@ jobs:
 
       - name: List files in temporary directory
         run: |
-          ls -l ${{ github.workspace }}/packaged.yaml
+          ls -l 
 
       - name: Deploy SAM application
         run: |
           echo "Deploying SAM application..."
-          aws cloudformation deploy --template-file ${{ github.workspace }}/packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
+          aws cloudformation deploy --template-file /packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
           echo "SAM deployment completed successfully"
 
 
