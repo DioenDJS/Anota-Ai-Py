@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r dep.txt -t dependencies/python
-          sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket anotai-test-sam
+          sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket anotai-test
 
       - name: Install SAM CLI
         run: |
