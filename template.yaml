@@ -45,3 +45,29 @@ Resources:
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt CatalogUpdateV2DLQ.Arn
         maxReceiveCount: 3
+
+  CatalogEmitConsumerLoadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src
+      Handler: loaders.catalog_emit_consumer_load.lambda_handler
+      FunctionName: !Join [ "-", [ "catalog-emit-consumer-load", !FindInMap [ Environments, !Ref Environment, ResourceSufix ] ] ]
+      Timeout: 60
+      Policies:
+        - AWSLambda_FullAccess
+        - AmazonSQSFullAccess
+        - AmazonSSMReadOnlyAccess
+        - SecretsManagerReadWrite
+      VpcConfig:
+        SecurityGroupIds:
+          - !FindInMap [ Environments, !Ref Environment, SecurityGroupId ]
+        SubnetIds:
+          - !FindInMap [ Environments, !Ref Environment, SubnetId ]
+      Events:
+        CatalogUpdateV2Queue:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt CatalogUpdateV2Queue.Arn
+            BatchSize: 1
+            FunctionResponseTypes:
+              - ReportBatchItemFailures
