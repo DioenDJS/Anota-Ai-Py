@@ -41,6 +41,10 @@ jobs:
         run: |
           rm -f packaged.yaml
 
+      - name: List files in current directory
+        run: |
+          ls -l
+
       - name: Deploy SAM application
         run: |
           echo "Deploying SAM application..."
