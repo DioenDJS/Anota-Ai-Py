@@ -44,11 +44,7 @@ Resources:
   CatalogUpdateV2Queue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: !join
-        - ""
-        - - "CatalogUpdateV2Queue"
-          - !FindInMap [Environments, !Ref Environment, QueueSufix]
-          - ".fifo"
+      QueueName: !Sub "${CatalogUpdateV2DLQ}${QueueSufix}.fifo"
       FifoQueue: true
       ContentBasedDeduplication: true
       RedrivePolicy:
