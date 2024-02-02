@@ -12,6 +12,7 @@ Mappings:
       ResourceSufix: development
       QueueSufix: Development
       SecurityGroupId: sg-0b8f9e8784efe46d5
+      SubnetId: subnet-060d670917d500988
       AnotaAiDesafioPrivateAppKey: secrets://anotaaidesafio/development?private_app_key
       AnotaAiDesafioPrivateAppSecret: parameters://anotaaidesafio/development?private-app/secret
 
