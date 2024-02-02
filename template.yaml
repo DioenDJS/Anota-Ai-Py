@@ -9,7 +9,7 @@ Parameters:
 Mappings:
   Environments:
     development:
-      ResouceSufix: development
+      ResourceSufix: development
       QueueSufix: Development
       SecurityGroupId: sg-0b8f9e8784efe46d5
       AnotaAiDesafioPrivateAppKey: secrets://anotaaidesafio/development?private_app_key
