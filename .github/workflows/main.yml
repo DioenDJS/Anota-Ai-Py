@@ -37,7 +37,7 @@ jobs:
 
       - name: Package SAM application
         run: |
-          sam package --output-template-file packaged.yaml
+          sam package --output-template-file packaged.yaml --s3-bucket anotai-test-sam
 
       - name: Deploy SAM application
         run: |
