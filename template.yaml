@@ -70,11 +70,8 @@ Resources:
     Properties:
       CodeUri: src
       Handler: loaders.catalog_emit_consumer_load.lambda_handler
-      FunctionName: !Join
-        - "-"
-        - - "catalog-emit-consumer-load"
-          - !FindInMap [Environments, !Ref Environment, ResourceSufix]
-      Timeout: 60
+      FunctionName: !Join [ "-", [ "catalog-emit-consumer-load", !FindInMap [ Environments, !Ref Environment, ResourceSufix ] ] ]
+      Timeout: 120
       Policies:
         - AWSLambda_FullAccess
         - AmazonSQSFullAccess
@@ -82,9 +79,8 @@ Resources:
         - SecretsManagerReadWrite
       VpcConfig:
         SecurityGroupIds:
-          - !FindInMap [Environments, !Ref Environment, SecurityGroupId]
-        SubnetIds:
-          - !FindInMap [Environments, !Ref Environment, SubnetId]
+          - !FindInMap [ Environments, !Ref Environment, SecurityGroupId ]
+        SubnetId: !FindInMap [ Environments, !Ref Environment, SubnetId ]
       Events:
         CatalogUpdateV2Queue:
           Type: SQS

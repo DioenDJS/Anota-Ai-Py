@@ -1,8 +1,3 @@
-import s3_client
-
-client = s3_client({region: "us-east-2"})
-
-client.serd()
 
 
 def lambda_handler(event, context):
