@@ -44,12 +44,26 @@ Resources:
   CatalogUpdateV2Queue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: !Sub "${CatalogUpdateV2DLQ}${QueueSufix}.fifo"
+      QueueName:
+        Fn::Sub:
+          - '${CatalogUpdateV2DLQ}${QueueSufix}.fifo'
+          - CatalogUpdateV2DLQ: !FindInMap [ Environments, !Ref Environment, ResourceSufix ]
+            QueueSufix: !FindInMap [ Environments, !Ref Environment, QueueSufix ]
       FifoQueue: true
       ContentBasedDeduplication: true
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt CatalogUpdateV2DLQ.Arn
         maxReceiveCount: 3
+
+  DepLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: !Join [ "-", [ "anota-ai-desafio-dependencies", !FindInMap [ Environments, !Ref Environment, ResourceSufix ] ] ]
+      Description: Layer com as dependencias python especificadas no dep.txt
+      ContentUri: dependencies
+      CompatibleRuntimes:
+        - python3.9
+      LicenseInfo: "MIT"
 
   CatalogEmitConsumerLoadFunction:
     Type: AWS::Serverless::Function
