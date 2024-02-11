@@ -42,7 +42,7 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --template-file packaged.yaml --parameter-overrides Environment=development --capabilities CAPABILITY_IAM  --stack-name anota-ai-desafio
+          sam deploy --template-file packaged.yaml --parameter-overrides Environment=development --capabilities CAPABILITY_IAM  --stack-name anota-ai-desafio --s3-bucket anotai-test
 
 
 
