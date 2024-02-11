@@ -34,23 +34,16 @@ Resources:
   CatalogUpdateV2DLQ:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName: !join
-        - ""
-        - - "CatalogUpdateV2DLQ"
-          - !FindInMap [Environments, !Ref Environment, QueueSufix]
-          - ".fifo"
+      QueueName: !join [ "", [ "CatalogUpdateV2DLQ", !FindInMap [ Environments, !Ref Environment, QueueSufix ], ".fifo" ] ]
       FifoQueue: true
 
   CatalogUpdateV2Queue:
     Type: AWS::SQS::Queue
     Properties:
-      QueueName:
-        Fn::Sub:
-          - '${CatalogUpdateV2DLQ}${QueueSufix}.fifo'
-          - CatalogUpdateV2DLQ: !FindInMap [ Environments, !Ref Environment, ResourceSufix ]
-            QueueSufix: !FindInMap [ Environments, !Ref Environment, QueueSufix ]
+      QueueName: !join [ "", [ "CatalogUpdateV2Queue", !FindInMap [ Environment, !Ref Enviroment, QueueSufix ], ".fifo" ] ]
       FifoQueue: true
       ContentBasedDeduplication: true
+      VisibilityTimeout: 120
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt CatalogUpdateV2DLQ.Arn
         maxReceiveCount: 3
