@@ -27,22 +27,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r dep.txt -t dependencies/python
-
-      - name: Install SAM CLI
-        run: |
-          pip install aws-sam-cli
-
-      - name: Build SAM application
-        run: |
-          sam build
-
-      - name: Package SAM application
-        run: |
           sam package --output-template-file packaged.yaml --s3-bucket anotai-test
 
       - name: Deploy SAM application
         run: |
-          sam deploy --template-file packaged.yaml --parameter-overrides Environment=development --capabilities CAPABILITY_IAM  --stack-name anota-ai-desafio --s3-bucket anotai-test
+          sam deploy --template-file packaged.yaml --parameter-overrides Environment=development --capabilities CAPABILITY_IAM  --stack-name anota-ai-desafio
 
 
 
