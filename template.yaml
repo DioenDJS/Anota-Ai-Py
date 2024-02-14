@@ -52,7 +52,7 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: !Join [ "-", [ "anota-ai-desafio-dependencies", !FindInMap [ Environments, !Ref Environment, ResourceSufix ] ] ]
-      Description: Layer com as dependencias python especificadas no dep.txt
+      Description: Layer com as dependencias python especificadas no requirements.txt
       ContentUri: dependencies
       CompatibleRuntimes:
         - python3.9

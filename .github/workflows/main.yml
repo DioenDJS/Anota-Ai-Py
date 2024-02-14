@@ -3,14 +3,16 @@ name: Deploy Application Anota-ai-desafio
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -26,14 +28,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r dep.txt -t dependencies/python
-          sam package --output-template-file packaged.yaml --s3-bucket anotai-test
+          pip install -r requirement.txt -t dependencies/python
 
-      - name: Deploy SAM application
+      - name: Install AWS SAM CLI
         run: |
-          sam deploy --template-file packaged.yaml --parameter-overrides Environment=development --capabilities CAPABILITY_IAM  --stack-name anota-ai-desafio
+          curl -L "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" -o sam.zip
+          unzip sam.zip -d sam
+          sudo mv sam/* /usr/local/bin/
+          sam --version
 
+      - name: Package AWS SAM application
+        run: sam package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket anotai-test
 
+      - name: Deploy AWS SAM application
+        run: sam deploy --template-file packaged.yaml --stack-name anota-ai-desafio --capabilities CAPABILITY_IAM
 
-
-      
